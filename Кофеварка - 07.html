@@ -14,7 +14,16 @@
         width: 50%;
         height: 600px;
         text-align: center;
-        /*background-image: url(сoffeeMashinePic.jpg);*/
+        background-image: url(сoffeeMashinePic.jpg);
+        background-repeat: no-repeat;
+        position: relative;
+      }
+      .#lass {
+        margin: 300 auto;
+        display: none;
+        position: absolute;
+        top: 400px;
+        left: 250px;
       }
       .coffeeMashineMenu {
         width: 370px;
@@ -66,7 +75,9 @@
     </style>
 <body>  
   <section>
-    <div class="coffeeMashinePic"><img src="сoffeeMashinePic.jpg" alt="coffeeMashine"></div>
+    <div class="coffeeMashinePic">
+      <div id="glass"><img src="coffee.png" alt="coffee"></div>
+    </div>
     <div class="coffeeMashineMenu">
       <div class="item_1"> 
         <div id="esc" onclick="deLonghi.esc()">esc</div>
@@ -108,7 +119,7 @@
     
     // Расчет времени приготовления кофе
     function makeTime() {
-      return waterAmount * WATER_THERMAL_CAPACITY * WATER_DEGREE / power;
+      return (waterAmount * WATER_THERMAL_CAPACITY * WATER_DEGREE / power);
     }
     /*
     this.setWaterAmount = function(amount) {
@@ -117,7 +128,12 @@
 
     // Приготовление кофе
     this.makeCoffee = function(id) {
-      // alert('!!');
+      if (onOff_Check) {
+
+      } else {
+
+      }
+
       coffeeMakeCheck = 1;
       console.log(id);
       switch(id) {
@@ -147,7 +163,8 @@
           var time = makeTime()
           document.getElementById('messages').innerText = 'Wait ' + time + ' until your drink is done';
           console.log('Wait ' + time + ' until your drink is done');
-          var timeId = setTimeout(isDone, makeTime());
+
+          var timeId = setTimeout(isDone(id), makeTime());
           console.log(makeTime());
           
           /*timeId = setTimeout(function() {
@@ -157,35 +174,35 @@
             }, time)*/
 
           } else {
-            console.error('The water is over!')
+            console.error('the water is over!')
           }
     }
 
     // Кофе готов
-    function isDone() {
+    function isDone(id) {
       // alert('Кофе готов!');
-      console.log('Кофе готов!');
+      // console.log('Кофе готов!');
       coffeeMakeCheck = 0;
-      document.getElementById('messages').innerText = 'is Done!';
-      
+      document.getElementById('messages').innerText = id + ' is done!';
+      document.getElementById('glass').style.display = 'block';
     }
 
     // Кнопка вкл/выкл 
     this.run = function() {
       if (onOffCheck == 0) {
           onOffCheck = 1;
-          waterAmount = waterCheck(); // проверка воды
+          waterAmount = water_Check(); // проверка воды
           console.log('waterAmount - ' + waterAmount);
-          coffeeAmount = coffeeCheck(); // проверка кофе
+          coffeeAmount = coffee_Check(); // проверка кофе
           console.log('coffeeAmount - ' + coffeeAmount);
-          wasteAmount = wasteCheck(); // проверка отходов
+          wasteAmount = waste_Check(); // проверка отходов
           console.log('wasteAmount - ' + wasteAmount);               
-          document.getElementById('messages').innerText = 'Ready';
+          document.getElementById('messages').innerText = 'ready';
       } else if (onOffCheck == 1) {
           clearTimeout(timeId);
           onOffCheck = 0;
-          document.getElementById('messages').innerText = 'Turned Off';
-          return console.log('Turned Off!')
+          document.getElementById('messages').innerText = 'Turned off';
+          return console.log('Turned off!')
         }
      }
 
@@ -197,14 +214,14 @@
           return console.log('Отменено пользователем!')
           coffeeMakeCheck = 0;
       } else if (onOffCheck == 0) {
-          document.getElementById('messages').innerText = 'Off';
-          console.log('Power is Off! Turn on the coffee machine first.');
+          document.getElementById('messages').innerText = 'off';
+          console.log('Power is off! Turn on the coffee machine first.');
         }     
     }
    
     
     // Проверка вкл/выкл кофемашина и сброс таймера
-    function onOffCheck() {
+    function onOff_Check() {
       if (onOffCheck == 1) {
         clearTimeout(timeId);
         return false;
@@ -214,7 +231,7 @@
     }
 
     // Проверка, готовится ли в данный момент кофе или нет
-    function makeCheck() {
+    function make_Check() {
       if (coffeeMakeCheck == 1) {
         return true;
       } else if (coffeeMakeCheck == 0) {
@@ -223,7 +240,7 @@
     }
 
     // Проверка уровня воды в ёмкости для воды
-    function waterCheck() {
+    function water_Check() {
       if (waterAmount == 0) {
         waterAmount = WATER_AMOUNT_MAX;
       } else {
@@ -233,7 +250,7 @@
     }
 
     // Проверка количества кофе в ёмкости для кофе
-    function coffeeCheck() {
+    function coffee_Check() {
       if (coffeeAmount == 0) {
         coffeeAmount = COFFEE_AMOUNT_MAX;
       } else {
@@ -243,7 +260,7 @@
     }
 
     // Проверка уровня отходов в ёмкости для отходов
-    function wasteCheck() {
+    function waste_Check() {
       if (wasteAmount == 0) {
         wasteAmount = 0;
       } else {
