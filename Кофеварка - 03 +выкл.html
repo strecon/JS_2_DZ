@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Кофеварка</title>
+</head>
+<body>
+  <script type="text/javascript">
+
+   function CoffeeMashine(power) {
+    var WATER_CONST = 4200; // удельная теплоёмкость
+    var WATER_DEGREE = 92;  // градусы нагревания воды
+    var waterAmount = 0; // количество залитой воды
+    var typeOfCofee;
+    // this.timeId;
+    
+    this.setWaterAmount = function(amount) {
+      waterAmount = amount;
+    }
+
+    this.typeOfCofee = function() {
+      typeOfCofee = prompt();
+    }
+
+    // Расчет времени приготовления кофе
+    function makeTime() {
+      return waterAmount * WATER_CONST * WATER_DEGREE / power; // return = 1000; // 1c
+    }
+
+    // Кофе готов
+    function isDone() {
+      // alert('Кофе готов!');
+      console.log('Кофе готов!')
+    }
+
+    // Кнопка запуска
+    this.run = function() {
+      console.log(makeTime());
+      timeId = setTimeout(isDone, makeTime());
+      //console.log(timeId);  // 1
+      /*
+        clearTimeout(timeId);
+      */
+    }
+    this.runOff = function() {
+      clearTimeout(timeId);
+      return console.log('Отменено пользователем!')
+    }
+   }
+
+   var saeco = new CoffeeMashine(2000);
+   console.log(saeco);
+
+   // saeco.waterAmount = 150;
+   saeco.setWaterAmount(50); // tipe of coffee
+ 
+   saeco.run();
+
+  </script>
+</body>
+</html>

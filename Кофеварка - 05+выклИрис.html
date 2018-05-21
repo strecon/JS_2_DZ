@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Кофеварка</title>
+</head>
+    <style>
+      section {        
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+      }
+      .coffeeMashinePic {
+        width: 50%;
+        height: 600px;
+        text-align: center;
+        /*background-image: url(сoffeeMashinePic.jpg);*/
+      }
+      .coffeeMashineMenu {
+        width: 370px;
+        padding-top: 100px;
+        font-family: verdana;
+        /*margin-left: 50px;*/
+      }
+      .item_1, .item_2, .item_3 {
+        display: flex;
+        justify-content: space-between;
+      }
+      #esc, #onOff, #exspresso, #lungo, #doppio, #americano {
+        background-color: #302F34;
+        border: 2px solid #BFBDBE;
+        border-radius: 10px;
+        font-size: 18px;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+        text-transform: capitalize;
+      }
+      #esc, #onOff, #exspresso, #lungo, #doppio, #americano:hover {
+        cursor: pointer;
+      }
+      #esc, #onOff {
+        width: 110px;
+        height: 70px;
+        line-height: 65px;
+        margin-bottom: 10px;
+      }
+      #exspresso, #lungo, #doppio, #americano {
+        width: 180px;
+        height: 90px;
+        line-height: 85px;
+      }
+      #messages {
+        width: 360px;
+        height: 100px;
+        background-color: #BFBDBE;
+        border: 2px solid #302F34;
+        border-radius: 10px;
+        font-size: 20px;
+        color: #302F34;
+        font-weight: 400;
+        line-height: 120px;
+        text-align: center;
+        margin: 20px auto;
+      }
+    </style>
+<body>  
+  <section>
+    <div class="coffeeMashinePic"><img src="img/сoffeeMashinePic.jpg" alt="coffeeMashine"></div>
+    <div class="coffeeMashineMenu">
+      <div class="item_1"> 
+        <div id="esc" onclick="deLonghi.esc()">esc</div>
+        <div id="onOff" onclick="deLonghi.run()">on/off</div>
+      </div>
+      <div class="item_2">
+        <div id="exspresso" onclick="deLonghi.makeCoffee(id)">expresso</div>
+        <div id="doppio" onclick="deLonghi.makeCoffee(id)">doppio</div>
+      </div>
+      <div class="item_3">
+        <div id="lungo" onclick="deLonghi.makeCoffee(id)">lungo</div>
+        <div id="americano" onclick="deLonghi.makeCoffee(id)">americano</div>
+      </div>
+      <div class="item_4" id="messages">Off</div>
+    </div>
+  </section>
+
+
+  <script type="text/javascript">
+
+   function CoffeeMashine(power) {
+    var WATER_CONST = 4200; // удельная теплоёмкость
+    var WATER_DEGREE = 92;  // градусы нагревания воды
+    var waterAmount = 0; // количество залитой воды
+    //this.timeId;
+    var tipeOfCoffe;
+    var onOffCheck = 0; // !!! var
+    this.coffeeMakeCheck = 0; // !!! var
+        
+    this.setWaterAmount = function(amount) {
+      waterAmount = amount;
+    }
+    
+    // Расчет времени приготовления кофе
+    function makeTime() {
+      return waterAmount * WATER_CONST * WATER_DEGREE / power; // return = 1000; // 1c
+    }
+
+    // приготовление кофе
+    this.makeCoffee = function(id) {
+      alert('function not implemented');
+      // coffeeMakeCheck = 1;
+    }
+
+    // Кофе готов
+    function isDone() {
+      // alert('Кофе готов!');
+      console.log('Кофе готов!');
+      coffeeMakeCheck = 0;
+      document.getElementById('messages').innerText = 'is Done!';
+    }
+
+    // Кнопка запуска
+    this.run = function() {
+      if (onOffCheck == 0) {
+        console.log(makeTime());
+        // проверка воды
+        // проверка кофе
+        // проверка отходов
+
+        var timeId = setTimeout(isDone, makeTime());
+        document.getElementById('messages').innerText = 'On';
+        onOffCheck = 1;
+        coffeeMakeCheck = 1;
+      } else if (onOffCheck == 1) {
+        clearTimeout(timeId);
+        onOffCheck = 0;
+        document.getElementById('messages').innerText = 'Off';
+        return console.log('Turned Off!')
+      }
+      
+    }
+   
+    // Кнопка отмены
+    this.esc = function(timeId) {
+      if (onOffCheck == 1) {
+          clearTimeout(timeId);
+          document.getElementById('messages').innerText = 'Canceled!';
+          return console.log('Отменено пользователем!')
+          coffeeMakeCheck = 0;
+      } else if (onOffCheck == 0) {
+          document.getElementById('messages').innerText = 'Off';
+          console.log('Power is Off! Turn on the coffee machine first.');
+      }     
+    }
+   }
+
+   var deLonghi = new CoffeeMashine(2000);
+   console.log(deLonghi);
+
+   // deLonghi.waterAmount = 150;
+   deLonghi.setWaterAmount(50); // tipe of coffee
+ 
+   // deLonghi.run();
+   //tipeOfCoffe = document.getElementsByTagName('div');
+
+
+  </script>
+</body>
+</html>

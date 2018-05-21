@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Кофеварка</title>
+</head>
+    <style>
+      section {        
+        display: flex;
+        justify-content: center;
+      }
+      .coffeeMashinePic {
+        width: 50%;
+        height: 600px;
+        text-align: center;
+        /*background-image: url(сoffeeMashinePic.jpg);*/
+      }
+      .coffeeMenu {
+        width: 30%;
+        padding-top: 100px;
+        /*margin-left: 50px;*/
+      }
+      .item_1, .item_2, .item_3 {
+        display: flex;
+        justify-content: space-between;
+      }
+      #esc, #onOff, #exspresso, #lungo, #doppio, #americano {
+        height: 70px;
+        background-color: #302F34;
+        border: 1px solid white;
+        border-radius: 10px;
+        font-family: verdana;
+        font-size: 18px;
+        color: white;
+        font-weight: 600;
+        line-height: 65px;
+        text-align: center;
+      }
+      #esc, #onOff {
+        width: 120px;
+      }
+      #exspresso, #lungo, #doppio, #americano {
+        width: 200px;
+      }
+    </style>
+<body>  
+  <section>
+    <div class="coffeeMashinePic"><img src="img/сoffeeMashinePic.jpg" alt="coffeeMashine"></div>
+    <div class="coffeeMenu">
+      <div class="item_1"> 
+        <div id="esc">Esc</div>
+        <div id="onOff">On/Off</div>
+      </div>
+      <div class="item_2">
+        <div id="exspresso">Expresso</div>
+        <div id="lungo">Lungo</div>
+      </div>
+      <div class="item_3">
+        <div id="doppio">Doppio</div>
+        <div id="americano">Americano</div>
+      </div>        
+    </div>
+  </section>
+
+
+
+  <script type="text/javascript">
+
+   function CoffeeMashine(power) {
+    var WATER_CONST = 4200; // удельная теплоёмкость
+    var WATER_DEGREE = 92;  // градусы нагревания воды
+    var waterAmount = 0; // количество залитой воды
+    // this.timeId;
+    
+    this.setWaterAmount = function(amount) {
+      waterAmount = amount;
+    }
+
+    this.typeOfCofee = function() {
+      typeOfCofee = prompt();
+    }
+
+    // Расчет времени приготовления кофе
+    function makeTime() {
+      return waterAmount * WATER_CONST * WATER_DEGREE / power; // return = 1000; // 1c
+    }
+
+    // Кофе готов
+    function isDone() {
+      // alert('Кофе готов!');
+      console.log('Кофе готов!')
+    }
+
+    // Кнопка запуска
+    this.run = function() {
+      console.log(makeTime());
+      var timeId = setTimeout(isDone, makeTime());
+      //console.log(timeId);  // 1
+      /*
+        clearTimeout(timeId);
+      */
+    }
+
+    // Кнопка отмены
+    this.runOff = function() {
+      clearTimeout(timeId);
+      return console.log('Отменено пользователем!')
+    }
+   }
+
+   var saeco = new CoffeeMashine(2000);
+   console.log(saeco);
+
+   // saeco.waterAmount = 150;
+   saeco.setWaterAmount(50); // tipe of coffee
+ 
+   saeco.run();
+
+  </script>
+</body>
+</html>

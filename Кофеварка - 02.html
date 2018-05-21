@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Кофеварка</title>
+</head>
+<body>
+  <script type="text/javascript">
+
+   function CofeeMashine(power) {
+    var WATER_CONST = 4200; // удельная теплоёмкость
+    var WATER_DEGREE = 80;  // градусы нагревания воды
+    var waterAmount = 0; // количество залитой воды
+    
+    this.setWaterAmount = function(amount) {
+      waterAmount = amount;
+    }
+
+    // Расчет времени приготовления кофе
+    function makeTime() {
+      return waterAmount * WATER_CONST * WATER_DEGREE / power; // return = 1000; // 1c
+    }
+
+    // Кофе готов
+    function isDone() {
+      alert('Кофе готов!');
+    }
+
+    // Кнопка запуска
+     this.run = function() {
+      console.log(makeTime());
+      var timeId = setTimeout(isDone, makeTime());
+      console.log(timeId);
+
+      /*var runOff = prompt('Ваш кофе готовится. Для отмены введите 0');
+      if (runOff == 0) {
+        clearTimeout(timeId);
+      }*/
+    }
+
+   }
+
+
+   var cofeeMashine = new CofeeMashine(2000);
+   console.log(cofeeMashine);
+
+   // cofeeMashine.waterAmount = 150;
+   cofeeMashine.setWaterAmount(50);
+ 
+   cofeeMashine.run();
+
+  </script>
+</body>
+</html>
