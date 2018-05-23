@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Кофеварка</title>
+</head>
+    <style>
+      section {        
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+      }
+      .coffeeMashinePic {
+        width: 50%;
+        height: 600px;
+        text-align: center;
+        background-image: url(сoffeeMashinePic.jpg);
+        background-repeat: no-repeat;
+        position: relative;
+      }
+      #glass {
+        margin: 300 auto;
+        display: none;
+        position: absolute;
+        top: 400px;
+        left: 250px;
+      }
+      .coffeeMashineMenu {
+        width: 370px;
+        padding-top: 100px;
+        font-family: verdana;
+        /*margin-left: 50px;*/
+      }
+      .item_1, .item_2, .item_3 {
+        display: flex;
+        justify-content: space-between;
+      }
+      #esc, #onOff, #exspresso, #lungo, #doppio, #americano {
+        background-color: #302F34;
+        border: 2px solid #BFBDBE;
+        border-radius: 10px;
+        font-size: 18px;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+        text-transform: capitalize;
+      }
+      #esc, #onOff, #exspresso, #lungo, #doppio, #americano:hover {
+        cursor: pointer;
+      }
+      #esc, #onOff {
+        width: 110px;
+        height: 70px;
+        line-height: 65px;
+        margin-bottom: 10px;
+      }
+      #exspresso, #lungo, #doppio, #americano {
+        width: 180px;
+        height: 90px;
+        line-height: 85px;
+      }
+      #messages {
+        width: 360px;
+        height: 100px;
+        background-color: #BFBDBE;
+        border: 2px solid #302F34;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #302F34;
+        font-weight: 400;
+        line-height: 120px;
+        text-align: center;
+        margin: 20px auto;
+      }
+    </style>
+<body>  
+  <section>
+    <div class="coffeeMashinePic">
+      <div id="glass"><img src="coffee.png" alt="coffee"></div>
+    </div>
+    <div class="coffeeMashineMenu">
+      <div class="item_1"> 
+        <div id="esc" onclick="deLonghi.esc()">esc</div>
+        <div id="onOff" onclick="deLonghi.run()">on/off</div>
+      </div>
+      <div class="item_2">
+        <div id="exspresso" onclick="deLonghi.makeCoffee(id)">expresso</div>
+        <div id="doppio" onclick="deLonghi.makeCoffee(id)">doppio</div>
+      </div>
+      <div class="item_3">
+        <div id="lungo" onclick="deLonghi.makeCoffee(id)">lungo</div>
+        <div id="americano" onclick="deLonghi.makeCoffee(id)">americano</div>
+      </div>
+      <div class="item_4" id="messages">Off</div>
+    </div>
+  </section>
+
+
+  <script type="text/javascript">
+
+   function CoffeeMashine(power) {
+    var WATER_THERMAL_CAPACITY = 4200; // удельная теплоёмкость
+    var WATER_DEGREE = 92;  // градусы нагревания воды
+    var WATER_AMOUNT_MAX = 1000;  // максимальный объем воды, мл
+    var COFFEE_AMOUNT_MAX = 500;  // максимальный объем кофе, гр
+    var WASTE_AMOUNT_MAX = 300;   // максимальный объем отходов, гр
+    
+    var waterAmount = 0;  // текущее количество залитой воды
+    var coffeeAmount = 0;  // текущее количество засыпанного кофе    
+    var wasteAmount = 0;  // текущее количество отходов
+
+    var onOffCheck = 0; // !!! var
+    var coffeeMakeCheck = 0; // !!! var
+
+    //this.timeId;
+    var timeId;
+    var tipeOfDrink {
+      exspresso: {
+        water = 30;
+        coffee = 9;
+        waste = 9;
+      }
+      doppio: {
+        water = 60;
+        coffee = 20;
+        waste = 20;
+      }
+      lungo: {
+        water = 100;
+        coffee = 10;
+        waste = 10;
+      }
+      americano: {
+        water = 120;
+        coffee = 15;
+        waste = 15;
+      }
+    }
+    
+    
+    // Расчет времени приготовления кофе
+    function makeTime() {
+      return (waterAmount * WATER_THERMAL_CAPACITY * WATER_DEGREE / power);
+    }
+    /*
+    this.setWaterAmount = function(amount) {
+      waterAmount = amount;
+    }*/
+
+    // Приготовление кофе
+    this.makeCoffee = function(id) {
+      if (onOff_Check) {
+
+      } else {
+
+      }
+
+      coffeeMakeCheck = 1;
+      console.log(id);
+      switch(id) {
+        case 'exspresso':
+          waterAmount -= 30;
+          coffeeAmount -=9;
+          wasteAmount +=9;
+          break;
+        case 'doppio':
+          waterAmount -= 60;
+          coffeeAmount -=20;
+          wasteAmount +=20;
+          break;
+        case 'lungo':
+          waterAmount -= 100;
+          coffeeAmount -=10;
+          wasteAmount +=10;
+          break;
+        case 'americano':
+          waterAmount -= 120;
+          coffeeAmount -=15;
+          wasteAmount +=15;
+          break;
+      }
+
+      if (waterAmount > 120) {
+          var time = makeTime()
+          document.getElementById('messages').innerText = 'Wait ' + time + ' until your drink is done';
+          console.log('Wait ' + time + ' until your drink is done');
+
+          var timeId = setTimeout(isDone(id), makeTime());
+          console.log(makeTime());
+          
+          /*timeId = setTimeout(function() {
+              console.log('YOUR COFFEE IS DONE!')
+
+              waterVolume = 0
+            }, time)*/
+
+          } else {
+            console.error('the water is over!')
+          }
+    }
+
+    // Кофе готов
+    function isDone(id) {
+      // alert('Кофе готов!');
+      // console.log('Кофе готов!');
+      coffeeMakeCheck = 0;
+      document.getElementById('messages').innerText = id + ' is done!';
+      document.getElementById('glass').style.display = 'block';
+    }
+
+    // Кнопка вкл/выкл 
+    this.run = function() {
+      if (onOffCheck == 0) {
+          onOffCheck = 1;
+          waterAmount = water_Check(); // проверка воды
+          console.log('waterAmount - ' + waterAmount);
+          coffeeAmount = coffee_Check(); // проверка кофе
+          console.log('coffeeAmount - ' + coffeeAmount);
+          wasteAmount = waste_Check(); // проверка отходов
+          console.log('wasteAmount - ' + wasteAmount);               
+          document.getElementById('messages').innerText = 'ready';
+      } else if (onOffCheck == 1) {
+          clearTimeout(timeId);
+          onOffCheck = 0;
+          document.getElementById('messages').innerText = 'Turned off';       
+          document.getElementById('glass').style.display = 'none';
+          return console.log('Turned off!')
+        }
+     }
+
+    // Кнопка отмены
+    this.esc = function() {
+      if (onOffCheck == 1) {
+          clearTimeout(timeId);
+          document.getElementById('messages').innerText = 'Canceled!';
+          return console.log('Отменено пользователем!')
+          coffeeMakeCheck = 0;
+      } else if (onOffCheck == 0) {
+          document.getElementById('messages').innerText = 'off';
+          console.log('Power is off! Turn on the coffee machine first.');
+        }     
+    }
+   
+    
+    // Проверка вкл/выкл кофемашина и сброс таймера
+    function onOff_Check() {
+      if (onOffCheck == 1) {
+        clearTimeout(timeId);
+        return false;
+      } else if (onOffCheck == 0) {
+        return true;
+      }
+    }
+
+    // Проверка, готовится ли в данный момент кофе или нет
+    function make_Check() {
+      if (coffeeMakeCheck == 1) {
+        return true;
+      } else if (coffeeMakeCheck == 0) {
+        return false;
+      }
+    }
+
+    // Проверка уровня воды в ёмкости для воды
+    function water_Check() {
+      if (waterAmount == 0) {
+        waterAmount = WATER_AMOUNT_MAX;
+      } else {
+        waterAmount = waterAmount;
+      }
+      return waterAmount;
+    }
+
+    // Проверка количества кофе в ёмкости для кофе
+    function coffee_Check() {
+      if (coffeeAmount == 0) {
+        coffeeAmount = COFFEE_AMOUNT_MAX;
+      } else {
+        coffeeAmount = coffeeAmount;
+      }
+      return coffeeAmount;
+    }
+
+    // Проверка уровня отходов в ёмкости для отходов
+    function waste_Check() {
+      if (wasteAmount == 0) {
+        wasteAmount = 0;
+      } else {
+        wasteAmount = wasteAmount;
+      }
+      return wasteAmount;
+    }
+
+    /*// Универсальная проверка объемов веществ в ёмкостях
+    function amountSmthCheck(smth) {
+      if (this == 0) {
+        this = XXX_AMOUNT_MAX;
+      } else {
+        this = this;
+      }
+      return this;
+    }*/
+  }
+
+
+   var deLonghi = new CoffeeMashine(2000);
+   console.log(deLonghi);
+
+   // deLonghi.waterAmount = 150;
+   // deLonghi.setWaterAmount(50); // tipe of coffee
+ 
+   // deLonghi.run();
+
+   
+
+  </script>
+</body>
+</html>
